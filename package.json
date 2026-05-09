@@ -9,9 +9,9 @@
     "start": "node dist/src/server.js",
     "dev": "tsx watch src/server.ts",
     "lint": "eslint . --ext .ts,.js",
-    "test": "NODE_ENV=test node --import tsx node_modules/mocha/bin/mocha --ui tdd 'test/**/*.ts' --exit",
-    "testmodels": "node --import tsx node_modules/mocha/bin/mocha --ui tdd 'test/models/**/*.ts' --exit",
-    "testapi": "node --import tsx node_modules/mocha/bin/mocha --ui tdd 'test/api/**/*.ts' --exit"
+    "test": "cross-env NODE_ENV=test mocha --ui tdd --node-option=import=tsx \"test/**/*.ts\" --exit",
+    "testmodels": "cross-env NODE_ENV=test mocha --ui tdd --node-option=import=tsx \"test/models/**/*.ts\" --exit",
+    "testapi": "cross-env NODE_ENV=test mocha --ui tdd --node-option=import=tsx \"test/api/**/*.ts\" --exit"
   },
   "keywords": [
     "node",
@@ -53,6 +53,7 @@
     "axios": "^1.7.9",
     "chai": "^5.2.0",
     "copyfiles": "^2.4.1",
+    "cross-env": "^10.1.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.0.1",

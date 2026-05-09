@@ -1,7 +1,7 @@
 import { before, suite, test } from "mocha";
 import { assert } from "chai";
 import { server } from "@/server.js";
-import { initStores } from "@/core/data/db.js";
+import { db, initStores } from "@/core/data/db.js";
 import { accountsController } from "@/app/controllers/accounts-controller.js";
 import { countControllerEndpoints, assertControllerEndpointCount } from "../../helpers/controller-count.js";
 import { signupPayload, loginPayload, updatePayload } from "../../fixtures/accounts.js";
@@ -37,6 +37,14 @@ suite("Accounts controller", () => {
     });
     assert.strictEqual(res.statusCode, 302);
     assert.include(res.headers.location, "/");
+  });
+
+  test("POST /signup stores password hashed, never plaintext", async () => {
+    await server.inject({ method: "POST", url: "/signup", payload: signupPayload });
+    const stored = await db.userStore.getUserByEmail(signupPayload.email);
+    assert.exists(stored, "user not found in store after signup");
+    assert.notStrictEqual(stored.password, signupPayload.password, "stored password is plaintext");
+    assert.include(stored.password, ":", "stored password should be salt:hash format");
   });
 
   test("GET /login returns 200", async () => {

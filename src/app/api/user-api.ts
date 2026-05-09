@@ -1,4 +1,5 @@
 import { db } from "@/core/data/db.js";
+import { hashPassword, verifyPassword } from "@/core/security/passwords.js";
 
 export const userApi = {
   create: {
@@ -6,7 +7,7 @@ export const userApi = {
       const { email, password, firstName, lastName } = request.payload;
       await db.userStore.addUser({
         email,
-        password,
+        password: await hashPassword(password),
         firstName,
         lastName,
       });
@@ -19,7 +20,7 @@ export const userApi = {
     handler: async function (request, h) {
       const { email, password } = request.payload;
       const user = await db.userStore.getUserByEmail(email);
-      if (!user || user.password !== password) {
+      if (!user || !(await verifyPassword(password, user.password))) {
         return h.response({ error: "Invalid email or password" }).code(401);
       }
       const { password: _, ...safe } = user;

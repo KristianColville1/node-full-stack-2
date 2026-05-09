@@ -1,6 +1,7 @@
 import Joi from "joi";
 import { db } from "@/core/data/db.js";
 import { UserCredentialsSpec, UserSpec, UserUpdateSpec } from "@/app/data/schema/joi-schemas.js";
+import { hashPassword, verifyPassword } from "@/core/security/passwords.js";
 
 /** Accounts controller: main, signup, login, logout. */
 export const accountsController = {
@@ -23,6 +24,7 @@ export const accountsController = {
     auth: false,
     handler: async function (request, h) {
       const user = Joi.attempt(request.payload, UserSpec);
+      user.password = await hashPassword(user.password);
       await db.userStore.addUser(user);
       return h.redirect("/");
     },
@@ -41,7 +43,7 @@ export const accountsController = {
     handler: async function (request, h) {
       const { email, password } = Joi.attempt(request.payload, UserCredentialsSpec);
       const user = await db.userStore.getUserByEmail(email);
-      if (!user || user.password !== password) {
+      if (!user || !(await verifyPassword(password, user.password))) {
         return h.redirect("/login?error=invalid");
       }
       request.cookieAuth.set({ id: user._id });
