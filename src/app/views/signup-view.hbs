@@ -4,6 +4,9 @@
             <div class="card form-card">
                 <div class="card-content">
                     <h1 class="title is-4">Sign up</h1>
+                    {{#if error}}
+                    <div class="notification is-danger">{{error}}</div>
+                    {{/if}}
                     <form action="/signup" method="POST">
                         <label class="label">Name</label>
                         <div class="field is-horizontal">

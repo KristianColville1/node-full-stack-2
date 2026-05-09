@@ -47,6 +47,14 @@ suite("Accounts controller", () => {
     assert.include(stored.password, ":", "stored password should be salt:hash format");
   });
 
+  test("POST /signup with already-taken email redirects to /signup?error=email-taken", async () => {
+    await server.inject({ method: "POST", url: "/signup", payload: signupPayload });
+    const res = await server.inject({ method: "POST", url: "/signup", payload: signupPayload });
+    assert.strictEqual(res.statusCode, 302);
+    assert.include(res.headers.location, "/signup");
+    assert.include(res.headers.location, "error=email-taken");
+  });
+
   test("GET /login returns 200", async () => {
     const res = await server.inject({ method: "GET", url: "/login" });
     assert.strictEqual(res.statusCode, 200);

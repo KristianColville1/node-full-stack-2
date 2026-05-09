@@ -5,6 +5,10 @@ export const userApi = {
   create: {
     handler: async function (request, h) {
       const { email, password, firstName, lastName } = request.payload;
+      const existing = await db.userStore.getUserByEmail(email);
+      if (existing) {
+        return h.response({ error: "An account with that email already exists" }).code(409);
+      }
       await db.userStore.addUser({
         email,
         password: await hashPassword(password),

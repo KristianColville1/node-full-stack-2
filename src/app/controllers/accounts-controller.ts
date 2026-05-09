@@ -15,15 +15,20 @@ export const accountsController = {
   /** GET /signup — Show signup form. */
   showSignup: {
     auth: false,
-    handler: function (_request, h) {
-      return h.view("signup-view", { title: "Sign up for Beanmap", active: "signup", user: null });
+    handler: function (request, h) {
+      const error = request.query.error === "email-taken" ? "An account with that email already exists." : null;
+      return h.view("signup-view", { title: "Sign up for Beanmap", active: "signup", user: null, error });
     },
   },
-  /** POST /signup — Create user, redirect /. */
+  /** POST /signup — Create user, redirect /. Rejects if email already taken. */
   signup: {
     auth: false,
     handler: async function (request, h) {
       const user = Joi.attempt(request.payload, UserSpec);
+      const existing = await db.userStore.getUserByEmail(user.email);
+      if (existing) {
+        return h.redirect("/signup?error=email-taken");
+      }
       user.password = await hashPassword(user.password);
       await db.userStore.addUser(user);
       return h.redirect("/");
