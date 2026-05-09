@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": "./dist",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/app/*": ["src/app/*"],
+      "@/core/*": ["src/core/*"],
+      "@/data/*": ["src/data/*"],
+      "@/models/*": ["src/appdata/models/*"],
+      "@/views/*": ["src/app/views/*"],
+      "@/controllers/*": ["src/app/controllers/*"],
+      
+    },
+    "strict": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": false,
+    "declaration": false,
+    "sourceMap": true
+  },
+  "include": ["src/**/*", "public"],
+  "exclude": ["node_modules", "dist"]
+}

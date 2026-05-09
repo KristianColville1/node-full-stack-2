@@ -1,0 +1,68 @@
+{
+  "name": "beanmap",
+  "version": "0.1.0",
+  "description": "Café POI web app for the WIT HDip in Computing Full Stack module",
+  "main": "dist/src/server.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc && tsc-alias -p tsconfig.json && copyfiles -u 1 \"src/app/views/**/*\" dist/src && copyfiles \"public/**/*\" dist",
+    "start": "node dist/src/server.js",
+    "dev": "tsx watch src/server.ts",
+    "lint": "eslint . --ext .ts,.js",
+    "test": "NODE_ENV=test node --import tsx node_modules/mocha/bin/mocha --ui tdd 'test/**/*.ts' --exit",
+    "testmodels": "node --import tsx node_modules/mocha/bin/mocha --ui tdd 'test/models/**/*.ts' --exit",
+    "testapi": "node --import tsx node_modules/mocha/bin/mocha --ui tdd 'test/api/**/*.ts' --exit"
+  },
+  "keywords": [
+    "node",
+    "hapi",
+    "poi",
+    "cafes"
+  ],
+  "author": "",
+  "license": "ISC",
+  "overrides": {
+    "diff": "^8.0.3",
+    "serialize-javascript": "^7.0.3"
+  },
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@hapi/cookie": "^12.0.1",
+    "@hapi/hapi": "^21.3.12",
+    "@hapi/inert": "^7.1.0",
+    "@hapi/vision": "^7.0.3",
+    "dotenv": "^16.4.7",
+    "handlebars": "^4.7.8",
+    "hapi-auth-jwt2": "^11.0.0",
+    "hapi-swagger": "^17.3.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "lowdb": "^7.0.1",
+    "mongodb": "^6.12.0",
+    "reflect-metadata": "^0.2.2",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.28",
+    "uuid": "^11.0.5"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.19",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "axios": "^1.7.9",
+    "chai": "^5.2.0",
+    "copyfiles": "^2.4.1",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-import": "^2.31.0",
+    "fast-glob": "^3.3.3",
+    "mocha": "^11.1.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.8.1",
+    "tsc-alias": "^1.8.16",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

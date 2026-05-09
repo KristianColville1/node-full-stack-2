@@ -1,0 +1,86 @@
+<div class="box mt-4 add-cafe-form">
+  <h2 class="subtitle">Add Cafe</h2>
+  <form id="add-cafe-form" action="/cafes" method="POST">
+    <div class="columns is-multiline">
+      <div class="column is-full-mobile is-half-tablet">
+        <div class="field">
+          <label class="label" for="add-cafe-name">Name</label>
+          <input id="add-cafe-name" class="input" type="text" name="name" placeholder="Cafe name" required>
+        </div>
+      </div>
+      <div class="column is-full-mobile is-half-tablet">
+        <div class="field">
+          <label class="label" for="add-cafe-category">Category</label>
+          <input id="add-cafe-category" class="input" type="text" name="category" placeholder="e.g. Specialty, Roaster" required>
+        </div>
+      </div>
+      <div class="column is-full">
+        <div class="field">
+          <label class="label" for="add-cafe-description">Description</label>
+          <textarea id="add-cafe-description" class="textarea" name="description" placeholder="Description" rows="3" required></textarea>
+        </div>
+      </div>
+      <div class="column is-full-mobile is-half-tablet">
+        <div class="field">
+          <label class="label" for="add-cafe-latitude">Latitude</label>
+          <input id="add-cafe-latitude" class="input" type="text" name="latitude" placeholder="e.g. 52.123" inputmode="decimal" autocomplete="off" required>
+          <p class="help add-cafe-lat-help is-hidden">Enter a number between -90 and 90.</p>
+        </div>
+      </div>
+      <div class="column is-full-mobile is-half-tablet">
+        <div class="field">
+          <label class="label" for="add-cafe-longitude">Longitude</label>
+          <input id="add-cafe-longitude" class="input" type="text" name="longitude" placeholder="e.g. -7.456" inputmode="decimal" autocomplete="off" required>
+          <p class="help add-cafe-lon-help is-hidden">Enter a number between -180 and 180.</p>
+        </div>
+      </div>
+      <div class="column is-full">
+        <div class="field">
+          <button type="submit" class="button is-link">Add cafe</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+(function () {
+  var form = document.getElementById('add-cafe-form');
+  if (!form) return;
+  function parseFloatVal(str) {
+    if (str == null || String(str).trim() === '') return NaN;
+    return parseFloat(String(str).trim(), 10);
+  }
+  function isValidLatitude(val) {
+    var n = parseFloatVal(val);
+    return !Number.isNaN(n) && n >= -90 && n <= 90;
+  }
+  function isValidLongitude(val) {
+    var n = parseFloatVal(val);
+    return !Number.isNaN(n) && n >= -180 && n <= 180;
+  }
+  form.addEventListener('submit', function (e) {
+    var latInput = document.getElementById('add-cafe-latitude');
+    var lonInput = document.getElementById('add-cafe-longitude');
+    var latHelp = document.querySelector('.add-cafe-lat-help');
+    var lonHelp = document.querySelector('.add-cafe-lon-help');
+    var lat = latInput && latInput.value;
+    var lon = lonInput && lonInput.value;
+    latInput.classList.remove('is-danger');
+    lonInput.classList.remove('is-danger');
+    if (latHelp) latHelp.classList.add('is-hidden');
+    if (lonHelp) lonHelp.classList.add('is-hidden');
+    var ok = true;
+    if (!isValidLatitude(lat)) {
+      if (latInput) latInput.classList.add('is-danger');
+      if (latHelp) latHelp.classList.remove('is-hidden');
+      ok = false;
+    }
+    if (!isValidLongitude(lon)) {
+      if (lonInput) lonInput.classList.add('is-danger');
+      if (lonHelp) lonHelp.classList.remove('is-hidden');
+      ok = false;
+    }
+    if (!ok) e.preventDefault();
+  });
+})();
+</script>

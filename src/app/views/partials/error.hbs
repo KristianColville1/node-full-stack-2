@@ -1,0 +1,12 @@
+{{#if error}}
+<div class="notification is-danger toast" role="alert">
+    <button type="button" class="delete" aria-label="close" onclick="this.closest('.toast').remove()"></button>
+    {{error}}
+</div>
+<script>
+(function () {
+    var toast = document.querySelector('.toast');
+    if (toast) setTimeout(function () { toast.remove(); }, 5000);
+})();
+</script>
+{{/if}}

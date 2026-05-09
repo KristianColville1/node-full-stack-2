@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Niconne&display=swap');
+
+/**
+ * Main app styles.
+ */
+
+:root {
+  --ink-black: #001524;
+  --ink-black-light: #003052;
+  --ash-grey: #9db5b2;
+  --light-cyan: #daf0ee;
+  --walnut: #6d3d14;
+  --espresso: #551b14;
+
+  --body-background: rgb(246, 246, 246);
+}
+
+body {
+  background-color: var(--body-background);
+  background-image:
+    linear-gradient(rgba(246, 246, 246, 0.92), rgba(246, 246, 246, 0.92)),
+    url("/assets/images/abf8ac6b2585fcc6e834867cae7699c60a3961b1d62577d30462aceb8d1b238c.jpg");
+  background-size: auto, cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Niconne', cursive;
+}
+
+.panel .panel-icon {
+  color: var(--walnut);
+}
+
+/* Toast: fixed position + slide-in (Bulma .notification does the rest) */
+.toast {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  max-width: 22rem;
+  animation: toast-in 0.35s ease-out;
+}
+
+@keyframes toast-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Login / Signup / Account form cards */
+.form-card {
+  max-width: 26rem;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0.5rem 1rem rgba(0, 21, 36, 0.08);
+}
+
+/* Add cafe form: constrained width on large screens, responsive columns */
+.add-cafe-form {
+  max-width: 100%;
+}
+@media screen and (min-width: 769px) {
+  .add-cafe-form {
+    max-width: 42rem;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .add-cafe-form {
+    max-width: 48rem;
+  }
+}
+
+/* List cafes: card layout, white bg, large icon */
+.list-cafe-card {
+  background-color: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 21, 36, 0.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.list-cafe-card .card-content {
+  flex-grow: 1;
+  padding: 1.25rem;
+}
+.list-cafe-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.75rem;
+  color: var(--walnut);
+  align-items: center;
+  justify-content: center;
+}
+.list-cafe-icon i {
+  font-size: inherit;
+}
+.list-cafe-fields {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(10, 10, 10, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.list-cafe-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.list-cafe-field .icon {
+  flex-shrink: 0;
+  margin-top: 0.15em;
+}
+.list-cafe-field-text {
+  word-break: break-word;
+  color: #4a4a4a;
+  line-height: 1.4;
+}
+.list-cafe-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+@media screen and (min-width: 769px) {
+  .list-cafe-fields {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+  }
+  .list-cafe-field {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+.list-cafe-card .card-footer {
+  border-top: 1px solid rgba(10, 10, 10, 0.08);
+  padding: 0.5rem 0.75rem;
+}
+.list-cafe-card .card-footer .button {
+  padding: 0.35em 0.75em;
+}
+
+section {
+  min-width: 50vw;
+}

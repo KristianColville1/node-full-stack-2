@@ -1,0 +1,55 @@
+{{#if cafes.length}}
+<div class="columns is-multiline is-variable is-4">
+  {{#each cafes}}
+  <div class="column is-full">
+    <div class="card list-cafe-card">
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left">
+            <span class="icon list-cafe-icon" aria-hidden="true">
+              <i class="fas fa-mug-hot"></i>
+            </span>
+          </div>
+          <div class="media-content">
+            <p class="title is-5 has-text-dark">{{name}}</p>
+            <p class="subtitle is-6 has-text-grey">{{category}}</p>
+          </div>
+        </div>
+        <div class="content list-cafe-fields">
+          {{#if description}}
+          <div class="list-cafe-field">
+            <span class="icon is-small has-text-grey" aria-hidden="true"><i class="fas fa-align-left"></i></span>
+            <span class="list-cafe-field-text list-cafe-description">{{description}}</span>
+          </div>
+          {{/if}}
+          {{#if latitude}}{{#if longitude}}
+          <div class="list-cafe-field">
+            <span class="icon is-small has-text-grey" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
+            <span class="list-cafe-field-text">{{latitude}}, {{longitude}}</span>
+          </div>
+          {{/if}}{{/if}}
+          {{#if analytics.views}}
+          <div class="list-cafe-field">
+            <span class="icon is-small has-text-grey" aria-hidden="true"><i class="fas fa-eye"></i></span>
+            <span class="list-cafe-field-text">{{analytics.views}} views</span>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+      {{#if canDelete}}
+      <footer class="card-footer">
+        <form class="card-footer-item" action="/cafes/{{_id}}/delete" method="POST" onsubmit="return confirm('Delete this cafe?');">
+          <button type="submit" class="button is-danger is-small" aria-label="Delete cafe">
+            <span class="icon is-small"><i class="fas fa-trash-alt"></i></span>
+            <span>Delete</span>
+          </button>
+        </form>
+      </footer>
+      {{/if}}
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{else}}
+<p class="mb-4">No cafes yet.</p>
+{{/if}}

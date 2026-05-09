@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{description}}">
+    <meta name="keywords" content="{{keywords}}">
+    <meta name="author" content="Kristian Colville">
+    <meta name="robots" content="index, follow">
+    <title>{{title}}</title>
+        <!-- icons for devices -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/android-chrome-192x192.png">
+        <link rel="icon" type="image/png" sizes="512x512" href="/assets/images/android-chrome-512x512.png">
+        <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <!-- styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/hamburgers.css">
+    <link rel="stylesheet" href="/assets/css/nav.css">
+    <link rel="stylesheet" href="/assets/css/footer.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/frappe-charts@1.2.4/dist/frappe-charts.min.iife.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid" style="min-height: 100vh;">
+        {{> menu }}
+
+        <main class="container">
+            {{> error }}
+            {{{content}}}
+        </main>
+    </div>
+    {{> footer }}
+    <script src="/assets/js/app.js"></script>
+</body>
+
+</html>

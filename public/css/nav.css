@@ -1,0 +1,57 @@
+/*
+ * Navigation – brand colors (variables from app.css).
+ */
+.navbar .navbar-brand .navbar-item,
+.navbar .navbar-item,
+.navbar .navbar-burger {
+  color: var(--ink-black);
+  font-family: 'Niconne', cursive;
+  font-size: 1.5rem;
+}
+.navbar .navbar-item:hover,
+.navbar .navbar-burger:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--ink-black);
+}
+.navbar .navbar-item.is-active {
+  background-color: var(--light-cyan) !important;
+}
+.navbar .navbar-item.is-active:hover {
+  background-color: var(--light-cyan) !important;
+}
+
+/*
+ * Spinner hamburger (hamburgers.css) in navbar – mobile only, far right, brand color.
+ */
+.navbar-brand .nav-burger {
+  margin-left: auto;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.navbar-brand .nav-burger .hamburger-inner,
+.navbar-brand .nav-burger .hamburger-inner::before,
+.navbar-brand .nav-burger .hamburger-inner::after {
+  background-color: var(--ink-black);
+}
+/* Hidden on desktop */
+@media screen and (min-width: 1024px) {
+  .navbar-brand .nav-burger {
+    display: none !important;
+  }
+}
+/* Mobile/tablet: center brand + burger vertically, add horizontal spacing */
+@media screen and (max-width: 1023px) {
+  .navbar-brand {
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 100%;
+  }
+  .navbar-brand .nav-burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

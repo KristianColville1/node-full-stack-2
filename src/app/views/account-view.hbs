@@ -1,0 +1,33 @@
+<section class="section">
+    <div class="columns is-centered">
+        <div class="column is-6-tablet is-7-desktop">
+            <div class="card form-card">
+                <div class="card-content">
+                    <h1 class="title is-4">Account</h1>
+                    <form action="/account" method="POST">
+                        <div class="field">
+                            <label class="label">First name</label>
+                            <input class="input" type="text" name="firstName" value="{{user.firstName}}">
+                        </div>
+                        <div class="field">
+                            <label class="label">Last name</label>
+                            <input class="input" type="text" name="lastName" value="{{user.lastName}}">
+                        </div>
+                        <div class="field">
+                            <label class="label">Email</label>
+                            <input class="input" type="text" name="email" value="{{user.email}}">
+                        </div>
+                        <div class="field">
+                            <button class="button is-link is-fullwidth">Update</button>
+                        </div>
+                    </form>
+                    <form action="/account/delete" method="POST" class="mt-5" onsubmit="return confirm('Delete your account? This cannot be undone.');">
+                        <div class="field">
+                            <button type="submit" class="button is-danger is-fullwidth is-light">Delete account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

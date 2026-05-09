@@ -1,0 +1,11 @@
+/*
+ * Footer – brand colors (variables from app.css).
+ */
+footer {
+  background-color: var(--ink-black);
+  color: var(--light-cyan);
+}
+footer .content,
+footer p {
+  color: var(--light-cyan);
+}

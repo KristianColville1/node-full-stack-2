@@ -1,0 +1,31 @@
+<nav class="navbar">
+    <div class="container">
+  <div class="navbar-brand">
+    {{> cafe-brand}}
+    <button id="navBurger" class="nav-burger hamburger hamburger--spin" type="button" aria-label="Toggle menu" aria-expanded="false" data-target="navMenu">
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+  </div>
+  <div class="navbar-menu" id="navMenu">
+    <div class="navbar-end">
+      {{#if user}}
+      <a id="dashboard" class="navbar-item nav-link" href="/dashboard">Dashboard</a>
+      <a id="cafes" class="navbar-item nav-link" href="/cafes">Cafes</a>
+      <a id="about" class="navbar-item nav-link" href="/about">About</a>
+      <a id="account" class="navbar-item nav-link" href="/account">Account</a>
+      <a id="logout" class="navbar-item nav-link" href="/logout">Logout</a>
+      {{else}}
+      <a id="login" class="navbar-item nav-link" href="/login">Login</a>
+      <a id="signup" class="navbar-item nav-link" href="/signup">Sign up</a>
+      <a id="about" class="navbar-item nav-link" href="/about">About</a>
+      {{/if}}
+    </div>
+  </div>
+  </div>
+</nav>
+
+<script>
+    if (document.getElementById("{{active}}")) document.getElementById("{{active}}").classList.add("is-active");
+</script>
