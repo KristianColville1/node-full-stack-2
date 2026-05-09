@@ -39,7 +39,7 @@ server.auth.strategy("session", "cookie", {
   validate: accountsController.validate,
 });
 server.auth.strategy("jwt", "jwt", {
-  key: env.COOKIE_PASSWORD,
+  key: env.JWT_SECRET,
   validate: validateJWT,
   verifyOptions: { algorithms: ["HS256"] },
 });

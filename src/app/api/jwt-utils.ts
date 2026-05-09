@@ -2,6 +2,11 @@ import jwt from "jsonwebtoken";
 import { env } from "@/core/config/env.js";
 import { db } from "@/core/data/db.js";
 
+/**
+ * Token payload shape: { id, email } — `id` is the user's `_id`.
+ * Keep this consistent across createToken / decodeToken / validateJWT so
+ * downstream code only ever has to know one field name.
+ */
 export function createToken(user) {
   const payload = {
     id: user._id,
@@ -11,20 +16,16 @@ export function createToken(user) {
     algorithm: "HS256",
     expiresIn: "1h",
   };
-  return jwt.sign(payload, env.COOKIE_PASSWORD, options);
+  return jwt.sign(payload, env.JWT_SECRET, options);
 }
 
 export function decodeToken(token) {
-  const userInfo = {} as { userId: string; email: string };
   try {
-      const decoded = jwt.verify(token, env.COOKIE_PASSWORD);
-      
-    userInfo.userId = decoded.id;
-    userInfo.email = decoded.email;
+    const decoded = jwt.verify(token, env.JWT_SECRET);
+    return { id: decoded.id, email: decoded.email };
   } catch (e) {
-    console.log(e.message);
+    return null;
   }
-  return userInfo;
 }
 
 export async function validateJWT(decoded, request) {
