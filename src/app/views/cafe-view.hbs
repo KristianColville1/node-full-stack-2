@@ -1,4 +1,5 @@
 <section class="section">
-  <h1 class="title">Cafes</h1>
+  <h1 class="title">{{#if activeCategory}}{{activeCategory}}{{else}}Cafes{{/if}}</h1>
+  {{> category-chips}}
   {{> list-cafes}}
 </section>

@@ -4,6 +4,12 @@
             <div class="card form-card">
                 <div class="card-content">
                     <h1 class="title is-4">Account</h1>
+                    {{#if updated}}
+                    <div class="notification is-success">Your account details were updated.</div>
+                    {{/if}}
+                    {{#if error}}
+                    <div class="notification is-danger">{{error}}</div>
+                    {{/if}}
                     <form action="/account" method="POST">
                         <div class="field">
                             <label class="label">First name</label>

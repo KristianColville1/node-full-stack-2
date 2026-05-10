@@ -69,7 +69,9 @@ export const accountsController = {
   showAccount: {
     handler: function (request, h) {
       const user = request.auth.credentials;
-      return h.view("account-view", { title: "Account", active: "account", user });
+      const updated = request.query.updated === "1";
+      const error = request.query.error === "email-taken" ? "That email is already in use by another account." : null;
+      return h.view("account-view", { title: "Account", active: "account", user, updated, error });
     },
   },
 
@@ -79,18 +81,25 @@ export const accountsController = {
       const updates = Joi.attempt(request.payload, UserUpdateSpec);
       const existing = await db.userStore.getUserByEmail(updates.email);
       if (existing && existing._id !== user._id) {
-        return h.redirect("/account");
+        return h.redirect("/account?error=email-taken");
       }
       await db.userStore.updateUser(user._id, updates);
-      return h.redirect("/account");
+      return h.redirect("/account?updated=1");
     },
     validate: { payload: UserUpdateSpec },
   },
 
+  /**
+   * Self-delete: cascade-removes the user's cafés before deleting the user.
+   * Cascade lives here in the controller (not the store) because the user store
+   * has no awareness of the cafe store — keeping it cross-store keeps each store
+   * single-responsibility.
+   */
   deleteAccount: {
     handler: async function (request, h) {
       const user = request.auth.credentials;
       if (request.cookieAuth) request.cookieAuth.clear();
+      await db.cafeStore.deleteByUserId(user._id);
       await db.userStore.deleteUser(user._id);
       return h.redirect("/");
     },

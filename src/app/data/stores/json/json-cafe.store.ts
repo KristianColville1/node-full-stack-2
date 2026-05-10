@@ -45,5 +45,11 @@ export function createJsonCafeStore() {
       const key = category.toLowerCase();
       return db.data.cafes.filter((c) => c.category?.toLowerCase() === key);
     },
+
+    async deleteByUserId(userId) {
+      await db.read();
+      db.data.cafes = db.data.cafes.filter((c) => c.userId !== userId);
+      await db.write();
+    },
   };
 }

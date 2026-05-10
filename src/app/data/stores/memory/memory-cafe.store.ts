@@ -37,4 +37,8 @@ export class MemoryCafeStore implements ICafeStore {
   async getByCategory(category) {
     return this.cafes.filter((c) => c.category.toLowerCase() === category.toLowerCase());
   }
+
+  async deleteByUserId(userId) {
+    this.cafes = this.cafes.filter((c) => c.userId !== userId);
+  }
 }

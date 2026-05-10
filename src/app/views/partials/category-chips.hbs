@@ -1,0 +1,8 @@
+{{#if categories.length}}
+<div class="tags mb-4">
+  <a href="/cafes" class="tag {{#unless activeCategory}}is-link{{else}}is-light{{/unless}}">All ({{totalCount}})</a>
+  {{#each categories}}
+  <a href="/cafes/category/{{name}}" class="tag {{#if isActive}}is-link{{else}}is-light{{/if}}">{{name}} ({{count}})</a>
+  {{/each}}
+</div>
+{{/if}}

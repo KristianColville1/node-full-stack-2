@@ -23,4 +23,17 @@ suite("Server", () => {
     assert.exists(defaultAuth, "auth default should be set");
     assert.strictEqual(defaultAuth.strategies?.[0], "session");
   });
+
+  test("GET /documentation (Swagger UI) returns 200", async () => {
+    const res = await server.inject({ method: "GET", url: "/documentation" });
+    assert.strictEqual(res.statusCode, 200);
+  });
+
+  test("GET /swagger.json returns the OpenAPI document with cafe + user paths", async () => {
+    const res = await server.inject({ method: "GET", url: "/swagger.json" });
+    assert.strictEqual(res.statusCode, 200);
+    const doc = JSON.parse(res.payload);
+    assert.exists(doc.paths["/api/cafes"], "API doc should list /api/cafes");
+    assert.exists(doc.paths["/api/users"], "API doc should list /api/users");
+  });
 });

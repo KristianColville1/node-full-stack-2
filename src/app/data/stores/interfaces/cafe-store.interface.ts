@@ -34,7 +34,14 @@ export interface ICafeStore {
 
   /**
    * Get cafes by category.
-   * @param category 
+   * @param category
    */
   getByCategory(category: string): any;
+
+  /**
+   * Delete every cafe owned by the given user. Used for cascading
+   * deletes when a user is removed (self-delete or admin-delete).
+   * @param userId
+   */
+  deleteByUserId(userId: string): any;
 }

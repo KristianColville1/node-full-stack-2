@@ -12,6 +12,8 @@ export const routes = [
   { method: "GET", path: "/dashboard", config: dashboardController.index },
   { method: "GET", path: "/cafes", config: cafeController.index },
   { method: "POST", path: "/cafes", config: cafeController.addCafe },
+  { method: "GET", path: "/cafes/category/{category}", config: cafeController.byCategory },
+  { method: "GET", path: "/cafes/{id}", config: cafeController.showCafe },
   { method: "POST", path: "/cafes/{id}/delete", config: cafeController.deleteCafe },
   { method: "GET", path: "/about", config: aboutController.index },
   { method: "GET", path: "/signup", config: accountsController.showSignup },

@@ -1,0 +1,42 @@
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left">
+            <span class="icon is-large has-text-dark" aria-hidden="true"><i class="fas fa-mug-hot fa-2x"></i></span>
+          </div>
+          <div class="media-content">
+            <h1 class="title is-3">{{cafe.name}}</h1>
+            <p class="subtitle is-6 has-text-grey">{{cafe.category}}</p>
+          </div>
+        </div>
+        {{#if cafe.description}}
+        <div class="content">
+          <p>{{cafe.description}}</p>
+        </div>
+        {{/if}}
+        <div class="content">
+          {{#if cafe.latitude}}{{#if cafe.longitude}}
+          <p>
+            <span class="icon is-small has-text-grey" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
+            <span>{{cafe.latitude}}, {{cafe.longitude}}</span>
+          </p>
+          {{/if}}{{/if}}
+          <p>
+            <span class="icon is-small has-text-grey" aria-hidden="true"><i class="fas fa-eye"></i></span>
+            <span>{{cafe.analytics.views}} views</span>
+          </p>
+        </div>
+        <div class="buttons">
+          <a href="/cafes" class="button">Back to cafes</a>
+          {{#if canDelete}}
+          <form action="/cafes/{{cafe._id}}/delete" method="POST" onsubmit="return confirm('Delete this cafe?');">
+            <button type="submit" class="button is-danger">Delete</button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

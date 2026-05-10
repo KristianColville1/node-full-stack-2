@@ -8,7 +8,7 @@ import { countControllerEndpoints, assertControllerEndpointCount } from "../../h
 import { addCafePayload } from "../../fixtures/cafes.js";
 import { signupPayload, loginPayload } from "../../fixtures/accounts.js";
 
-const EXPECTED_ENDPOINT_COUNT = 3; // update when adding/removing endpoints; add a test for each
+const EXPECTED_ENDPOINT_COUNT = 5; // update when adding/removing endpoints; add a test for each
 
 function getAuthCookie(): Promise<string> {
   return server
@@ -77,5 +77,32 @@ suite("Cafe controller", () => {
     });
     assert.strictEqual(res.statusCode, 302);
     assert.include(res.headers.location, "/cafes");
+  });
+
+  test("GET /cafes/:id increments analytics.views on each hit (persists across requests)", async () => {
+    const cookie = await getAuthCookie();
+    await server.inject({
+      method: "POST",
+      url: "/cafes",
+      payload: { ...addCafePayload, name: "View Counter Cafe" },
+      headers: { cookie },
+    });
+    const all = await db.cafeStore.getAllCafes();
+    const target = all.find((c: any) => c.name === "View Counter Cafe");
+    assert.exists(target);
+    await server.inject({ method: "GET", url: `/cafes/${target._id}`, headers: { cookie } });
+    await server.inject({ method: "GET", url: `/cafes/${target._id}`, headers: { cookie } });
+    const after = await db.cafeStore.getCafeById(target._id);
+    assert.strictEqual(after.analytics?.views, 2);
+  });
+
+  test("GET /cafes/category/:category renders 200 with only that category's cafes", async () => {
+    const cookie = await getAuthCookie();
+    await server.inject({ method: "POST", url: "/cafes", payload: { ...addCafePayload, name: "Latte Spot", category: "Latte" }, headers: { cookie } });
+    await server.inject({ method: "POST", url: "/cafes", payload: { ...addCafePayload, name: "Espresso Spot", category: "Espresso" }, headers: { cookie } });
+    const res = await server.inject({ method: "GET", url: "/cafes/category/Latte", headers: { cookie } });
+    assert.strictEqual(res.statusCode, 200);
+    assert.include(res.payload, "Latte Spot");
+    assert.notInclude(res.payload, "Espresso Spot");
   });
 });

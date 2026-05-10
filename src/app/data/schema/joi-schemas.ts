@@ -80,3 +80,30 @@ export const CafeUpdateSpec = Joi.object({
   analytics: Joi.object({ views: Joi.number().optional() }).optional(),
   userId: Joi.string().optional(),
 }).min(1).description("Cafe update payload");
+
+/** Cafe entity returned by the API: input fields plus server-assigned _id, analytics, owner. */
+export const CafeResponseSpec = Joi.object({
+  _id: Joi.string().description("Cafe id"),
+  name: Joi.string().description("Cafe name"),
+  category: Joi.string().description("Cafe category"),
+  description: Joi.string().allow("").description("Cafe description"),
+  latitude: Joi.number().description("Latitude"),
+  longitude: Joi.number().description("Longitude"),
+  analytics: Joi.object({ views: Joi.number() }).optional(),
+  userId: Joi.string().optional().description("Owner user id"),
+}).label("Cafe");
+
+export const CafeListResponseSpec = Joi.array().items(CafeResponseSpec).label("CafeList");
+
+/** User as returned by the API (no password). */
+export const UserResponseSpec = Joi.object({
+  _id: Joi.string(),
+  email: Joi.string().email(),
+  firstName: Joi.string(),
+  lastName: Joi.string(),
+}).label("User");
+
+/** Generic error envelope used by 4xx responses. */
+export const ErrorResponseSpec = Joi.object({
+  error: Joi.string(),
+}).label("Error");

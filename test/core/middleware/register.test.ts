@@ -2,7 +2,7 @@ import { after, before, suite, test } from "mocha";
 import { assert } from "chai";
 import { server, start } from "@/server.js";
 
-const EXPECTED_PLUGINS = ["@hapi/inert", "@hapi/vision", "@hapi/cookie"] as const;
+const EXPECTED_PLUGINS = ["@hapi/inert", "@hapi/vision", "@hapi/cookie", "hapi-auth-jwt2", "hapi-swagger"] as const;
 
 suite("Core - middleware", () => {
   before(async () => {
@@ -10,7 +10,7 @@ suite("Core - middleware", () => {
   });
 
   after(async () => {
-    server.stop();
+    await server.stop();
   });
 
   test("server has registrations object", () => {
