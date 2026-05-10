@@ -3,9 +3,10 @@ import { initStore } from "@/core/data/store-utils.js";
 
 /**
  * Cafe store backed by a JSON file in the project-root data directory.
+ * `baseDir` lets tests redirect writes to a temp directory.
  */
-export function createJsonCafeStore() {
-  const db = initStore("cafes");
+export function createJsonCafeStore(baseDir) {
+  const db = initStore("cafes", baseDir);
 
   return {
     async addCafe(cafe) {

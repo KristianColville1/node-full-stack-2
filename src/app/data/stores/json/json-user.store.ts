@@ -3,9 +3,10 @@ import { initStore } from "@/core/data/store-utils.js";
 
 /**
  * User store backed by a JSON file in the project-root data directory.
+ * `baseDir` lets tests redirect writes to a temp directory.
  */
-export function createJsonUserStore() {
-  const db = initStore("users");
+export function createJsonUserStore(baseDir) {
+  const db = initStore("users", baseDir);
 
   return {
     async addUser(user) {

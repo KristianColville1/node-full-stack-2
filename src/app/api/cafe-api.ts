@@ -1,5 +1,6 @@
 import { db } from "@/core/data/db.js";
 import { validationError } from "@/app/api/logger.js";
+import { DEFAULT_CATEGORY_COLOUR } from "@/app/data/categories.js";
 import {
   CafeSpec,
   CafeUpdateSpec,
@@ -7,6 +8,23 @@ import {
   CafeListResponseSpec,
   ErrorResponseSpec,
 } from "@/app/data/schema/joi-schemas.js";
+
+/**
+ * Normalise an API-supplied category against the category store. Adds a new
+ * record (with the default colour) if the name isn't already known so chip /
+ * marker rendering stays consistent across web + API.
+ */
+async function ensureCategory(userTyped) {
+  const trimmed = String(userTyped ?? "").trim();
+  if (!trimmed) return { name: "" };
+  const existing = await db.categoryStore?.getByName?.(trimmed);
+  if (existing) return existing;
+  return db.categoryStore?.addCategory?.({
+    name: trimmed,
+    colour: DEFAULT_CATEGORY_COLOUR,
+    isPreset: false,
+  }) ?? { name: trimmed };
+}
 
 const swaggerOk = (schema: any) => ({
   "hapi-swagger": {
@@ -68,7 +86,13 @@ export const cafeApi = {
     },
     handler: async function (request, h) {
       const cafe = request.payload as { name: string; category: string; description?: string; latitude: number; longitude: number };
-      const created = await db.cafeStore.addCafe(cafe);
+      const cat = await ensureCategory(cafe.category);
+      const ownerId = request.auth?.credentials?._id ?? null;
+      const created = await db.cafeStore.addCafe({
+        ...cafe,
+        category: cat.name || cafe.category,
+        userId: ownerId,
+      });
       if (created) return h.response(created).code(201);
       return h.response({ error: "Failed to create cafe" }).code(500);
     },

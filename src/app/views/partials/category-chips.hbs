@@ -1,8 +1,16 @@
 {{#if categories.length}}
-<div class="tags mb-4">
-  <a href="/cafes" class="tag {{#unless activeCategory}}is-link{{else}}is-light{{/unless}}">All ({{totalCount}})</a>
+<div class="tags mb-4 cafe-category-chips">
+  <a href="/cafes"
+     class="tag {{#unless activeCategory}}is-active{{/unless}}"
+     {{#unless activeCategory}}style="background-color: var(--ink-black); color: #fff;"{{/unless}}>
+    All ({{totalCount}})
+  </a>
   {{#each categories}}
-  <a href="/cafes/category/{{name}}" class="tag {{#if isActive}}is-link{{else}}is-light{{/if}}">{{name}} ({{count}})</a>
+  <a href="/cafes/category/{{name}}"
+     class="tag {{#if isActive}}is-active{{/if}}"
+     style="{{#if isActive}}background-color: {{colour}}; color: #fff;{{else}}background-color: rgba(0, 21, 36, 0.06); color: var(--ink-black); border-left: 3px solid {{colour}};{{/if}}">
+    {{name}} ({{count}})
+  </a>
   {{/each}}
 </div>
 {{/if}}

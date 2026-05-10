@@ -14,4 +14,10 @@ suite("Public assets", () => {
     assert.strictEqual(res.statusCode, 200);
     assert.include(res.payload, "App script");
   });
+
+  test("GET /assets/js/cafe-map.js returns 200 and JS content", async () => {
+    const res = await server.inject({ method: "GET", url: "/assets/js/cafe-map.js" });
+    assert.strictEqual(res.statusCode, 200);
+    assert.include(res.payload, "Cafe map glue");
+  });
 });

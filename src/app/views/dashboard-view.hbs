@@ -1,5 +1,13 @@
 <section class="section">
+  {{> cafe-map}}
+
+  <details class="add-cafe-collapse">
+    <summary>Create cafe</summary>
+    <div class="add-cafe-collapse-body">
+      {{> add-cafe}}
+    </div>
+  </details>
+
   {{> category-chips}}
   {{> list-cafes}}
-  {{> add-cafe}}
 </section>

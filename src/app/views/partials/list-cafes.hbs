@@ -1,52 +1,50 @@
 {{#if cafes.length}}
 <div class="columns is-multiline is-variable is-4">
   {{#each cafes}}
-  <div class="column is-full">
-    <div class="card list-cafe-card">
+  <div class="column is-full-mobile is-half-tablet is-one-third-desktop">
+    <article class="card list-cafe-card">
+      <div class="card-image">
+        <figure class="image is-4by3">
+          <img src="{{#if imageUrl}}{{imageUrl}}{{else}}/assets/images/placeholder.jpg{{/if}}"
+               alt="{{name}}"
+               loading="lazy">
+        </figure>
+        <span class="list-cafe-tag" style="background-color: {{categoryColour}};">{{category}}</span>
+      </div>
       <div class="card-content">
-        <div class="media">
-          <div class="media-left">
-            <span class="icon list-cafe-icon" aria-hidden="true">
-              <i class="fas fa-mug-hot"></i>
-            </span>
-          </div>
-          <div class="media-content">
-            <p class="title is-5"><a href="/cafes/{{_id}}" class="has-text-dark">{{name}}</a></p>
-            <p class="subtitle is-6 has-text-grey">{{category}}</p>
-          </div>
-        </div>
-        <div class="content list-cafe-fields">
-          {{#if description}}
-          <div class="list-cafe-field">
-            <span class="icon is-small has-text-grey" aria-hidden="true"><i class="fas fa-align-left"></i></span>
-            <span class="list-cafe-field-text list-cafe-description">{{description}}</span>
-          </div>
-          {{/if}}
+        <h3 class="list-cafe-name">
+          <a href="/cafes/{{_id}}" class="has-text-dark">{{name}}</a>
+        </h3>
+        {{#if description}}
+        <p class="list-cafe-description">{{description}}</p>
+        {{/if}}
+        <div class="list-cafe-meta">
           {{#if latitude}}{{#if longitude}}
-          <div class="list-cafe-field">
-            <span class="icon is-small has-text-grey" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></span>
-            <span class="list-cafe-field-text">{{latitude}}, {{longitude}}</span>
-          </div>
+          <span class="list-cafe-meta-item">
+            <span class="icon is-small"><i class="fas fa-map-marker-alt"></i></span>
+            <span>{{latitude}}, {{longitude}}</span>
+          </span>
           {{/if}}{{/if}}
           {{#if analytics.views}}
-          <div class="list-cafe-field">
-            <span class="icon is-small has-text-grey" aria-hidden="true"><i class="fas fa-eye"></i></span>
-            <span class="list-cafe-field-text">{{analytics.views}} views</span>
-          </div>
+          <span class="list-cafe-meta-item">
+            <span class="icon is-small"><i class="fas fa-eye"></i></span>
+            <span>{{analytics.views}}</span>
+          </span>
           {{/if}}
         </div>
       </div>
-      {{#if canDelete}}
       <footer class="card-footer">
-        <form class="card-footer-item" action="/cafes/{{_id}}/delete" method="POST" onsubmit="return confirm('Delete this cafe?');">
-          <button type="submit" class="button is-danger is-small" aria-label="Delete cafe">
+        <a class="card-footer-item list-cafe-link" href="/cafes/{{_id}}">View</a>
+        {{#if canDelete}}
+        <form class="card-footer-item list-cafe-delete" action="/cafes/{{_id}}/delete" method="POST" onsubmit="return confirm('Delete this cafe?');">
+          <button type="submit" class="button is-danger is-small is-light" aria-label="Delete cafe">
             <span class="icon is-small"><i class="fas fa-trash-alt"></i></span>
             <span>Delete</span>
           </button>
         </form>
+        {{/if}}
       </footer>
-      {{/if}}
-    </div>
+    </article>
   </div>
   {{/each}}
 </div>

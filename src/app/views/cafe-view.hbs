@@ -1,5 +1,103 @@
-<section class="section">
-  <h1 class="title">{{#if activeCategory}}{{activeCategory}}{{else}}Cafes{{/if}}</h1>
-  {{> category-chips}}
-  {{> list-cafes}}
+<section class="section cafes-directory">
+  <div class="cafes-directory-header">
+    <h1 class="title">{{#if activeCategory}}{{activeCategory}}{{else}}Cafe directory{{/if}}</h1>
+    <p class="subtitle is-6 has-text-grey">
+      {{#if activeCategory}}Cafes filed under <em>{{activeCategory}}</em>.{{else}}Browse every cafe in BeanMap. Filter by category, find your next regular.{{/if}}
+    </p>
+  </div>
+
+  <div class="columns is-desktop is-variable is-5">
+    <div class="column is-8-desktop">
+      {{> category-chips}}
+
+      {{#if cafes.length}}
+      <div class="columns is-multiline is-variable is-3 cafes-directory-grid">
+        {{#each cafes}}
+        <div class="column is-half-tablet is-half-desktop is-half-widescreen">
+          <article class="card directory-card">
+            <div class="card-image directory-card-image">
+              <figure class="image is-4by3">
+                <img src="{{#if imageUrl}}{{imageUrl}}{{else}}/assets/images/placeholder.jpg{{/if}}"
+                     alt="{{name}}"
+                     loading="lazy">
+              </figure>
+              <span class="directory-card-tag" style="background-color: {{categoryColour}};">{{category}}</span>
+              {{#if analytics.views}}
+              <span class="directory-card-views" title="Views">
+                <span class="icon is-small"><i class="fas fa-eye"></i></span>
+                <span>{{analytics.views}}</span>
+              </span>
+              {{/if}}
+            </div>
+            <div class="card-content">
+              <h2 class="directory-card-name">
+                <a href="/cafes/{{_id}}" class="has-text-dark">{{name}}</a>
+              </h2>
+              {{#if description}}
+              <p class="directory-card-description">{{description}}</p>
+              {{/if}}
+              <div class="directory-card-meta">
+                {{#if latitude}}{{#if longitude}}
+                <span>
+                  <span class="icon is-small has-text-grey"><i class="fas fa-map-marker-alt"></i></span>
+                  {{latitude}}, {{longitude}}
+                </span>
+                {{/if}}{{/if}}
+              </div>
+            </div>
+            <footer class="card-footer directory-card-footer">
+              <a class="card-footer-item directory-card-link" href="/cafes/{{_id}}">View details</a>
+              {{#if canDelete}}
+              <form class="card-footer-item directory-card-delete" action="/cafes/{{_id}}/delete" method="POST" onsubmit="return confirm('Delete this cafe?');">
+                <button type="submit" class="button is-danger is-small is-light" aria-label="Delete cafe">
+                  <span class="icon is-small"><i class="fas fa-trash-alt"></i></span>
+                  <span>Delete</span>
+                </button>
+              </form>
+              {{/if}}
+            </footer>
+          </article>
+        </div>
+        {{/each}}
+      </div>
+      {{else}}
+      <div class="notification is-light">
+        <p>No cafes here yet. <a href="/dashboard">Add the first one</a>.</p>
+      </div>
+      {{/if}}
+    </div>
+
+    <aside class="column is-4-desktop cafes-aside">
+      <div class="box cafes-aside-box">
+        <p class="heading">Total cafes</p>
+        <p class="cafes-aside-stat">{{totalCount}}</p>
+      </div>
+
+      {{#if categories.length}}
+      <div class="box cafes-aside-box">
+        <p class="heading">By category</p>
+        <ul class="cafes-aside-list">
+          {{#each categories}}
+          <li>
+            <a href="/cafes/category/{{name}}" class="cafes-aside-row {{#if isActive}}is-active{{/if}}">
+              <span class="cafes-aside-swatch" style="background-color: {{colour}};" aria-hidden="true"></span>
+              <span class="cafes-aside-name">{{name}}</span>
+              <span class="cafes-aside-count">{{count}}</span>
+            </a>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+
+      <div class="box cafes-aside-box cafes-aside-cta">
+        <p class="heading">Got a spot to add?</p>
+        <p class="mb-3">Cafes are added from your dashboard so you can pin them on the map.</p>
+        <a class="button is-link is-fullwidth" href="/dashboard">
+          <span class="icon"><i class="fas fa-plus"></i></span>
+          <span>Add a cafe</span>
+        </a>
+      </div>
+    </aside>
+  </div>
 </section>

@@ -11,7 +11,12 @@
       <div class="column is-full-mobile is-half-tablet">
         <div class="field">
           <label class="label" for="add-cafe-category">Category</label>
-          <input id="add-cafe-category" class="input" type="text" name="category" placeholder="e.g. Specialty, Roaster" required>
+          <input id="add-cafe-category" class="input" type="text" name="category"
+                 list="category-presets" placeholder="Coffee, Tea, Bakery, or your own" required>
+          <datalist id="category-presets">
+            {{#each presetCategories}}<option value="{{name}}"></option>{{/each}}
+          </datalist>
+          <p class="help has-text-grey">Pick a preset (coloured marker) or type your own (default colour).</p>
         </div>
       </div>
       <div class="column is-full">
@@ -19,6 +24,9 @@
           <label class="label" for="add-cafe-description">Description</label>
           <textarea id="add-cafe-description" class="textarea" name="description" placeholder="Description" rows="3" required></textarea>
         </div>
+      </div>
+      <div class="column is-full">
+        <p class="help has-text-grey mb-2">Tip: click anywhere on the map above to fill latitude and longitude automatically.</p>
       </div>
       <div class="column is-full-mobile is-half-tablet">
         <div class="field">

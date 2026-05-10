@@ -1,0 +1,7 @@
+<div class="cafe-map-wrap mb-4">
+  <div id="cafe-map" data-mode="{{mapMode}}"></div>
+  <script type="application/json" id="cafe-map-data">{{{safeJson cafeMapData}}}</script>
+  {{#if mapShowHint}}
+  <p class="help has-text-grey cafe-map-hint">Click anywhere on the map to set the cafe's coordinates.</p>
+  {{/if}}
+</div>
