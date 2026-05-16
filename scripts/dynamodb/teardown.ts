@@ -1,22 +1,10 @@
-import {
-  DeleteTableCommand,
-  DescribeTableCommand,
-  ResourceNotFoundException,
-} from "@aws-sdk/client-dynamodb";
+import { DeleteTableCommand } from "@aws-sdk/client-dynamodb";
 import { buildClient, describeTarget } from "./_client.js";
+import { tableExists } from "./_helpers.js";
 import { tables } from "./_tables.js";
 
-async function tableExists(client, name) {
-  try {
-    await client.send(new DescribeTableCommand({ TableName: name }));
-    return true;
-  } catch (err) {
-    if (err instanceof ResourceNotFoundException) return false;
-    throw err;
-  }
-}
-
 async function main() {
+  // Refuse without explicit confirmation — drops live tables.
   if (!process.argv.includes("--yes")) {
     console.error("Refusing to drop tables without --yes flag.");
     console.error("Run with `npm run db:teardown -- --yes` to confirm.");

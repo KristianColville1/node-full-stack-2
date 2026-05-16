@@ -1,25 +1,13 @@
-import {
-  DescribeTableCommand,
-  ListTablesCommand,
-  ResourceNotFoundException,
-} from "@aws-sdk/client-dynamodb";
+import { ListTablesCommand } from "@aws-sdk/client-dynamodb";
 import { buildClient, describeTarget } from "./_client.js";
+import { describeOrNull } from "./_helpers.js";
 import { tables } from "./_tables.js";
-
-async function describeOrNull(client, name) {
-  try {
-    const out = await client.send(new DescribeTableCommand({ TableName: name }));
-    return out.Table;
-  } catch (err) {
-    if (err instanceof ResourceNotFoundException) return null;
-    throw err;
-  }
-}
 
 async function main() {
   const target = buildClient();
   console.log(`DynamoDB list → ${describeTarget(target)}`);
 
+  // Account-wide table count first, then the rows we care about.
   const all = await target.client.send(new ListTablesCommand({}));
   console.log(`  ${all.TableNames?.length ?? 0} total table(s) in this account/region.`);
 

@@ -1,21 +1,7 @@
-import {
-  CreateTableCommand,
-  DescribeTableCommand,
-  ResourceNotFoundException,
-  waitUntilTableExists,
-} from "@aws-sdk/client-dynamodb";
+import { CreateTableCommand, waitUntilTableExists } from "@aws-sdk/client-dynamodb";
 import { buildClient, describeTarget } from "./_client.js";
+import { tableExists } from "./_helpers.js";
 import { tables } from "./_tables.js";
-
-async function tableExists(client, name) {
-  try {
-    await client.send(new DescribeTableCommand({ TableName: name }));
-    return true;
-  } catch (err) {
-    if (err instanceof ResourceNotFoundException) return false;
-    throw err;
-  }
-}
 
 async function createTable(client, table) {
   await client.send(
@@ -26,6 +12,7 @@ async function createTable(client, table) {
       BillingMode: "PAY_PER_REQUEST",
     }),
   );
+  // Block until ACTIVE so callers know writes will succeed immediately after.
   await waitUntilTableExists({ client, maxWaitTime: 60 }, { TableName: table.name });
 }
 
@@ -33,6 +20,7 @@ async function main() {
   const target = buildClient();
   console.log(`DynamoDB setup → ${describeTarget(target)}`);
 
+  // Idempotent: parallel-check then create only missing tables.
   const results = await Promise.all(
     tables.map(async (table) => {
       const exists = await tableExists(target.client, table.name);
