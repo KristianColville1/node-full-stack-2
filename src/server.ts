@@ -7,6 +7,7 @@ import { env } from "@/core/config/env.js";
 import { registerMiddleware } from "@/core/middleware/register.js";
 import { initStores, db } from "@/core/data/db.js";
 import { PRESET_CATEGORIES } from "@/app/data/categories.js";
+import { ensureAdmin } from "@/core/auth/admin-bootstrap.js";
 import { routes as frontendRoutes } from "@/app/routes/routes.js";
 import { apiRoutes } from "@/app/api/api-routes.js";
 import { accountsController } from "@/app/controllers/accounts-controller.js";
@@ -63,6 +64,13 @@ Handlebars.registerHelper("safeJson", (value) => {
   return new Handlebars.SafeString(json.replace(/</g, "\\u003c"));
 });
 
+// eq: equality check for #if conditionals where Handlebars' bare #if won't do
+// checking role === "admin" without exposing a derived boolean per record
+Handlebars.registerHelper("eq", (a: any, b: any) => a === b);
+
+// add: small numeric helper for view-side index/rank rendering (1-based).
+Handlebars.registerHelper("add", (a: any, b: any) => Number(a ?? 0) + Number(b ?? 0));
+
 /**
  * Register the routes
  */
@@ -105,13 +113,15 @@ server.views({
 
 /**
  * Start the server (registers auth plugins then strategies, then starts).
- * Seeds the category store with PRESET_CATEGORIES on first boot — idempotent.
+ * Seeds the category store with PRESET_CATEGORIES on first boot, then
+ * promotes ADMIN_EMAIL to role="admin" if configured. Both idempotent.
  */
 export async function start(): Promise<void> {
   initStores();
   if (db.categoryStore?.seedIfEmpty) {
     await db.categoryStore.seedIfEmpty(PRESET_CATEGORIES);
   }
+  await ensureAdmin(env.ADMIN_EMAIL, db.userStore);
   console.log("Server running on %s", server.info.uri);
   await server.start();
 }
