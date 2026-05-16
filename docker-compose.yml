@@ -1,0 +1,51 @@
+# Local dev stack: app + DynamoDB Local + admin GUI. Requires populated `.env`.
+
+services:
+  app:
+    build: .
+    container_name: beanmap-app
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      # Override .env's localhost endpoint with the compose service name.
+      DYNAMODB_ENDPOINT: http://dynamodb:8000
+      AWS_REGION: local
+      AWS_ACCESS_KEY_ID: local
+      AWS_SECRET_ACCESS_KEY: local
+      # Polling — host bind mounts miss inotify events on Docker Desktop.
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - dynamodb
+    command: npm run dev
+
+  # `-sharedDb` so the admin GUI and app see the same data.
+  dynamodb:
+    image: amazon/dynamodb-local:latest
+    container_name: beanmap-dynamodb
+    ports:
+      - "8000:8000"
+    command: ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "./data"]
+    working_dir: /home/dynamodblocal
+    volumes:
+      - dynamodb-data:/home/dynamodblocal/data
+
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin:latest
+    container_name: beanmap-dynamodb-admin
+    ports:
+      - "8001:8001"
+    environment:
+      DYNAMO_ENDPOINT: http://dynamodb:8000
+      AWS_REGION: local
+      AWS_ACCESS_KEY_ID: local
+      AWS_SECRET_ACCESS_KEY: local
+    depends_on:
+      - dynamodb
+
+volumes:
+  dynamodb-data:

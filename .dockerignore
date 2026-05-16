@@ -1,0 +1,37 @@
+node_modules
+npm-debug.log*
+
+# Build output
+dist
+*.tsbuildinfo
+
+# Local env + data — never bake into the image
+.env
+.env.*
+!.env.example
+/data
+.dynamodb
+
+# Tooling caches
+.eslintcache
+coverage
+.nyc_output
+
+# Editor / OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Gitignored notes (assignment docs stay out of the image)
+docs/notes
+
+# Docker files themselves don't belong in the image
+Dockerfile
+.dockerignore
+docker-compose*.yml

@@ -125,3 +125,4 @@ tmp
 /data
 docs/notes/
 .*
+!.dockerignore
