@@ -1,0 +1,86 @@
+<section class="section admin-section">
+  <h1 class="title">Admin</h1>
+  <p class="subtitle is-6 has-text-grey">At-a-glance view of users, cafes, and what people are looking at.</p>
+
+  <div class="columns is-multiline admin-stats">
+    <div class="column is-3-tablet">
+      <div class="box admin-stat">
+        <p class="heading">Users</p>
+        <p class="admin-stat-value">{{stats.users}}</p>
+      </div>
+    </div>
+    <div class="column is-3-tablet">
+      <div class="box admin-stat">
+        <p class="heading">Cafes</p>
+        <p class="admin-stat-value">{{stats.cafes}}</p>
+      </div>
+    </div>
+    <div class="column is-3-tablet">
+      <div class="box admin-stat">
+        <p class="heading">Total views</p>
+        <p class="admin-stat-value">{{stats.totalViews}}</p>
+      </div>
+    </div>
+    <div class="column is-3-tablet">
+      <div class="box admin-stat">
+        <p class="heading">Avg cafes / user</p>
+        <p class="admin-stat-value">{{stats.avgCafesPerUser}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns is-desktop is-variable is-5">
+    <div class="column is-7-desktop">
+      <div class="box">
+        <h2 class="admin-heading">Top cafes by views</h2>
+        {{#if topCafes.length}}
+        <ul class="admin-top-list">
+          {{#each topCafes}}
+          <li>
+            <a href="/cafes/{{_id}}" class="admin-top-row">
+              <span class="admin-top-rank">{{add @index 1}}</span>
+              <span class="tag admin-top-tag" style="background-color: {{categoryColour}};">{{category}}</span>
+              <span class="admin-top-name">{{name}}</span>
+              <span class="admin-top-views">
+                <span class="icon is-small"><i class="fas fa-eye"></i></span>
+                {{views}}
+              </span>
+            </a>
+          </li>
+          {{/each}}
+        </ul>
+        {{else}}
+        <p class="has-text-grey">No cafes yet.</p>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="column is-5-desktop">
+      <div class="box">
+        <h2 class="admin-heading">Cafes per category</h2>
+        {{#if categorySummary.length}}
+        <ul class="admin-cat-list">
+          {{#each categorySummary}}
+          <li class="admin-cat-row">
+            <span class="admin-cat-swatch" style="background-color: {{colour}};"></span>
+            <span class="admin-cat-name">{{name}}</span>
+            <span class="admin-cat-count">{{count}}</span>
+          </li>
+          {{/each}}
+        </ul>
+        {{else}}
+        <p class="has-text-grey">No categories yet.</p>
+        {{/if}}
+      </div>
+
+      <div class="box admin-cta">
+        <h2 class="admin-heading">Manage users</h2>
+        <p class="mb-3">View, audit, or remove user accounts (cafes cascade-delete).</p>
+        <a class="button is-link is-fullwidth" href="/admin/users">
+          <span class="icon"><i class="fas fa-users"></i></span>
+          <span>Open user list</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

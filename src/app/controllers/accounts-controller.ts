@@ -30,6 +30,7 @@ export const accountsController = {
         return h.redirect("/signup?error=email-taken");
       }
       user.password = await hashPassword(user.password);
+      user.role = "user";
       await db.userStore.addUser(user);
       return h.redirect("/");
     },

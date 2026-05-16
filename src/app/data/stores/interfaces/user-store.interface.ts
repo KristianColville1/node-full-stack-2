@@ -5,6 +5,7 @@ export interface IUserStore {
   addUser(user: any): any;
   getUserByEmail(email: string): any;
   getUserById(id: string): any;
+  getAllUsers(): any;
   updateUser(id: string, updates: any): any;
   deleteUser(id: string): any;
 }

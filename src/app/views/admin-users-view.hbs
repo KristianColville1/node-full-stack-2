@@ -1,0 +1,67 @@
+<section class="section admin-section">
+  <div class="admin-section-head">
+    <div>
+      <h1 class="title">Users</h1>
+      <p class="subtitle is-6 has-text-grey">{{users.length}} accounts. Admins listed first.</p>
+    </div>
+    <a class="button is-light" href="/admin">
+      <span class="icon"><i class="fas fa-arrow-left"></i></span>
+      <span>Back to admin</span>
+    </a>
+  </div>
+
+  {{#if error}}
+  <div class="notification is-warning">
+    <p>{{error}}</p>
+  </div>
+  {{/if}}
+
+  {{#if users.length}}
+  <div class="box admin-users-table-wrap">
+    <table class="table is-fullwidth is-hoverable admin-users-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th class="has-text-centered">Cafes</th>
+          <th class="has-text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each users}}
+        <tr>
+          <td>{{email}}</td>
+          <td>{{firstName}} {{lastName}}</td>
+          <td>
+            {{#if (eq role "admin")}}
+            <span class="tag admin-role-tag is-admin">admin</span>
+            {{else}}
+            <span class="tag admin-role-tag">user</span>
+            {{/if}}
+          </td>
+          <td class="has-text-centered">{{cafeCount}}</td>
+          <td class="has-text-right admin-users-actions">
+            <a class="button is-small is-light" href="/admin/users/{{_id}}">
+              <span class="icon is-small"><i class="fas fa-eye"></i></span>
+              <span>View</span>
+            </a>
+            {{#unless isSelf}}
+            <form class="is-inline-block" action="/admin/users/{{_id}}/delete" method="POST"
+                  onsubmit="return confirm('Delete this user and ALL their cafes? This cannot be undone.');">
+              <button type="submit" class="button is-small is-danger is-light">
+                <span class="icon is-small"><i class="fas fa-trash-alt"></i></span>
+                <span>Delete</span>
+              </button>
+            </form>
+            {{/unless}}
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  {{else}}
+  <p>No users yet.</p>
+  {{/if}}
+</section>

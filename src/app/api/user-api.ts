@@ -34,6 +34,7 @@ export const userApi = {
         password: await hashPassword(password),
         firstName,
         lastName,
+        role: "user",
       });
       const user = await db.userStore.getUserByEmail(email);
       const { password: _, ...safe } = user ?? {};

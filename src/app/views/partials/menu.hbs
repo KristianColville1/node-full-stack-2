@@ -15,6 +15,12 @@
       <a id="cafes" class="navbar-item nav-link" href="/cafes">Cafes</a>
       <a id="about" class="navbar-item nav-link" href="/about">About</a>
       <a id="account" class="navbar-item nav-link" href="/account">Account</a>
+      {{#if (eq user.role "admin")}}
+      <a id="admin" class="navbar-item nav-link admin-nav-link" href="/admin">
+        <span class="icon"><i class="fas fa-shield-alt"></i></span>
+        <span>Admin</span>
+      </a>
+      {{/if}}
       <a id="logout" class="navbar-item nav-link" href="/logout">Logout</a>
       {{else}}
       <a id="login" class="navbar-item nav-link" href="/login">Login</a>

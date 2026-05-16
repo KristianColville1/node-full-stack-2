@@ -494,6 +494,161 @@ section {
   margin-bottom: 1rem;
 }
 
+/* ----- Admin section ---------------------------------------------------- */
+
+.admin-section .title {
+  margin-bottom: 0.25rem;
+}
+.admin-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-stats {
+  margin-bottom: 1rem;
+}
+.admin-stat {
+  text-align: left;
+  border-left: 4px solid var(--walnut);
+  padding: 1rem 1.1rem;
+}
+.admin-stat .heading {
+  color: #6b7280;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.admin-stat-value {
+  font-family: 'Niconne', cursive;
+  font-size: 2.6rem;
+  line-height: 1.1;
+  color: var(--ink-black);
+}
+
+.admin-heading {
+  font-family: 'Niconne', cursive;
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--ink-black);
+}
+
+.admin-top-list,
+.admin-cat-list,
+.admin-user-cafe-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.admin-top-row,
+.admin-user-cafe-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.4rem;
+  color: var(--ink-black);
+  border-bottom: 1px solid rgba(10, 10, 10, 0.06);
+  text-decoration: none;
+}
+.admin-top-row:hover,
+.admin-user-cafe-row:hover {
+  background-color: rgba(0, 21, 36, 0.04);
+}
+.admin-top-rank {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: var(--walnut);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+.admin-top-tag,
+.admin-user-cafe-tag {
+  color: #fff !important;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+}
+.admin-top-name,
+.admin-user-cafe-name {
+  flex-grow: 1;
+  font-weight: 500;
+}
+.admin-top-views,
+.admin-user-cafe-views {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.admin-cat-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.25rem;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.06);
+}
+.admin-cat-swatch {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+.admin-cat-name {
+  flex-grow: 1;
+}
+.admin-cat-count {
+  color: #6b7280;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.admin-cta {
+  background: linear-gradient(135deg, #fff 0%, var(--light-cyan) 130%);
+}
+
+.admin-users-table-wrap {
+  padding: 0.5rem;
+}
+.admin-users-table th {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+.admin-users-actions .button + form {
+  margin-left: 0.35rem;
+}
+.admin-role-tag {
+  background-color: rgba(0, 21, 36, 0.08) !important;
+  color: var(--ink-black) !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.65rem;
+}
+.admin-role-tag.is-admin {
+  background-color: var(--walnut) !important;
+  color: #fff !important;
+}
+
+.admin-nav-link {
+  color: var(--walnut) !important;
+  font-weight: 600;
+}
+
 /* ----- Collapsible add-cafe (dashboard) ---------------------------------- */
 
 .add-cafe-collapse {

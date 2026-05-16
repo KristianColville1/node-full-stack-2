@@ -2,23 +2,19 @@ import { db } from "@/core/data/db.js";
 import { buildCategoryIndex, resolveCategoryStyle } from "@/app/data/categories.js";
 
 function buildChipData(cafes, allCategories, activeName) {
-  const counts = {};
-  const colours = {};
   const idx = buildCategoryIndex(allCategories);
-  for (const c of cafes) {
-    if (!c.category) continue;
-    const style = resolveCategoryStyle(c.category, idx);
-    counts[style.name] = (counts[style.name] || 0) + 1;
-    colours[style.name] = style.colour;
-  }
-  return Object.entries(counts)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([name, count]) => ({
-      name,
-      count,
-      colour: colours[name],
-      isActive: name === activeName,
-    }));
+  const byName = cafes
+    .filter((c) => c.category)
+    .reduce((acc, c) => {
+      const style = resolveCategoryStyle(c.category, idx);
+      const cur = acc.get(style.name) ?? { name: style.name, count: 0, colour: style.colour };
+      cur.count += 1;
+      acc.set(style.name, cur);
+      return acc;
+    }, new Map());
+  return [...byName.values()]
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((c) => ({ ...c, isActive: c.name === activeName }));
 }
 
 function decorateCafes(cafes, allCategories, userId) {

@@ -1,0 +1,62 @@
+<section class="section admin-section">
+  <div class="admin-section-head">
+    <div>
+      <h1 class="title">{{target.firstName}} {{target.lastName}}</h1>
+      <p class="subtitle is-6 has-text-grey">{{target.email}}</p>
+    </div>
+    <a class="button is-light" href="/admin/users">
+      <span class="icon"><i class="fas fa-arrow-left"></i></span>
+      <span>Back to users</span>
+    </a>
+  </div>
+
+  <div class="columns is-desktop is-variable is-5">
+    <div class="column is-4-desktop">
+      <div class="box">
+        <p class="heading">Role</p>
+        {{#if (eq target.role "admin")}}
+        <span class="tag admin-role-tag is-admin is-medium">admin</span>
+        {{else}}
+        <span class="tag admin-role-tag is-medium">user</span>
+        {{/if}}
+        <hr>
+        <p class="heading mt-3">Cafes added</p>
+        <p class="admin-stat-value">{{cafeCount}}</p>
+        <hr>
+        {{#unless isSelf}}
+        <form action="/admin/users/{{target._id}}/delete" method="POST"
+              onsubmit="return confirm('Delete this user and ALL their cafes? This cannot be undone.');">
+          <button type="submit" class="button is-danger is-fullwidth">
+            <span class="icon"><i class="fas fa-trash-alt"></i></span>
+            <span>Delete user (cascades cafes)</span>
+          </button>
+        </form>
+        {{else}}
+        <p class="has-text-grey is-size-7">Use Account → Delete account to remove your own admin record.</p>
+        {{/unless}}
+      </div>
+    </div>
+
+    <div class="column is-8-desktop">
+      <h2 class="admin-heading">Cafes by this user</h2>
+      {{#if cafes.length}}
+      <ul class="admin-user-cafe-list">
+        {{#each cafes}}
+        <li>
+          <a href="/cafes/{{_id}}" class="admin-user-cafe-row">
+            <span class="tag admin-user-cafe-tag" style="background-color: {{categoryColour}};">{{category}}</span>
+            <span class="admin-user-cafe-name">{{name}}</span>
+            <span class="admin-user-cafe-views">
+              <span class="icon is-small"><i class="fas fa-eye"></i></span>
+              {{#if analytics.views}}{{analytics.views}}{{else}}0{{/if}}
+            </span>
+          </a>
+        </li>
+        {{/each}}
+      </ul>
+      {{else}}
+      <p class="has-text-grey">No cafes yet.</p>
+      {{/if}}
+    </div>
+  </div>
+</section>
