@@ -26,6 +26,9 @@ const envSchema = Joi.object({
   COOKIE_NAME: Joi.string().required(),
   COOKIE_PASSWORD: Joi.string().min(32).required(),
   JWT_SECRET: Joi.string().min(32).required(),
+  // Optional: email of the user to be promoted to admin on startup.
+  // No-op if the user hasn't signed up yet — they'll be promoted on the next start.
+  ADMIN_EMAIL: Joi.string().email().optional().allow("", null),
 });
 
 /**
@@ -51,4 +54,5 @@ export const env = validateEnv({
   COOKIE_NAME: process.env.COOKIE_NAME,
   COOKIE_PASSWORD: process.env.COOKIE_PASSWORD,
   JWT_SECRET: process.env.JWT_SECRET,
+  ADMIN_EMAIL: process.env.ADMIN_EMAIL ?? "",
 });
