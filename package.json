@@ -11,7 +11,10 @@
     "lint": "eslint . --ext .ts,.js",
     "test": "cross-env NODE_ENV=test mocha --ui tdd --node-option=import=tsx \"test/**/*.ts\" --exit",
     "testmodels": "cross-env NODE_ENV=test mocha --ui tdd --node-option=import=tsx \"test/models/**/*.ts\" --exit",
-    "testapi": "cross-env NODE_ENV=test mocha --ui tdd --node-option=import=tsx \"test/api/**/*.ts\" --exit"
+    "testapi": "cross-env NODE_ENV=test mocha --ui tdd --node-option=import=tsx \"test/api/**/*.ts\" --exit",
+    "db:setup": "tsx scripts/dynamodb/setup.ts",
+    "db:teardown": "tsx scripts/dynamodb/teardown.ts",
+    "db:list": "tsx scripts/dynamodb/list.ts"
   },
   "keywords": [
     "node",
@@ -26,11 +29,14 @@
     "serialize-javascript": "^7.0.3"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1048.0",
+    "@aws-sdk/client-s3": "^3.1048.0",
     "@hapi/boom": "^10.0.1",
     "@hapi/cookie": "^12.0.1",
     "@hapi/hapi": "^21.3.12",
     "@hapi/inert": "^7.1.0",
     "@hapi/vision": "^7.0.3",
+    "cloudinary": "^2.10.0",
     "dotenv": "^16.4.7",
     "handlebars": "^4.7.8",
     "hapi-auth-jwt2": "^11.0.0",
@@ -38,9 +44,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "lowdb": "^7.0.1",
-    "mongodb": "^6.12.0",
     "reflect-metadata": "^0.2.2",
-    "sqlite3": "^5.1.7",
     "typeorm": "^0.3.28",
     "uuid": "^11.0.5"
   },
